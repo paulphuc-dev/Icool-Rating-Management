@@ -1,0 +1,41 @@
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { StoreBaseEntity } from "src/common/root/entities/store-base.entitiy";
+import { FeedbacksEntity } from "../../feedbacks/entities/feedbacks.entity";
+@Entity("cuahang")
+export class StoresEntity extends StoreBaseEntity{
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Column("varchar", { unique: true })
+  code: string;
+
+  @Column("nvarchar")
+  name: string;
+
+  @Column("nvarchar")
+  address: string;
+
+  @Column("varchar")
+  tel: string;
+
+  @Column("varchar", {name:"tinh"})
+  province: string;
+
+  @Column("varchar", {name:"quan"})
+  district: string;
+
+  @Column("varchar")
+  abbr: string;
+  
+  @Column("varchar", {name:"lat"})
+  latitude: string;
+
+  @Column("varchar", {name:"lng"})
+  longtitude: string;
+
+  @Column("nvarchar")
+  flag: string;
+
+  @OneToMany(()=> FeedbacksEntity, (t) => t.store)
+  feedbacks: FeedbacksEntity[];
+}
