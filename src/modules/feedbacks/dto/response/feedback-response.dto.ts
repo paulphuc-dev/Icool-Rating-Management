@@ -1,7 +1,7 @@
 import { Expose, Type } from "class-transformer";
-import { StoreResponseDto } from "./store.response.dto";
-import { OptionResponseDto } from "./option.response.dto";
 import { FeedbackDetailResponseDto } from "./feedback-detail.reponse.dto";
+import { StoresResponseDto } from "src/modules/stores/dto/store-response.dto";
+import { OptionResponseDto } from "src/modules/surveys/dto/response/option-response.dto";
 
 export class FeedbackResponseDto {
 
@@ -16,9 +16,6 @@ export class FeedbackResponseDto {
 
   @Expose()
   regionName: string;
-
-  /*@Expose()
-  storeCode: string;*/
 
   @Expose()
   phoneNumber?: string;
@@ -36,8 +33,8 @@ export class FeedbackResponseDto {
   createdBy?: string;
 
   @Expose()
-  @Type(()=> StoreResponseDto)
-  store: StoreResponseDto;
+  @Type(()=> StoresResponseDto)
+  store: StoresResponseDto;
 
   @Expose()
   @Type(() => OptionResponseDto)

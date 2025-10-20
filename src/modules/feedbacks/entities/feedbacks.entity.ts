@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { BaseEntity } from "src/common/root/entities/base.entity";
 import { StoresEntity } from "../../stores/entities/stores.entity";
-import { ScaleOptionEntity } from "./scale-option.entity";
 import { FeedbackDetailEntity } from "./feedback-detail.entity";
+import { ScaleOptionEntity } from "src/modules/surveys/entities/scale-option.entity";
 
 
 @Entity('feedback_tbl')

@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
 import { BaseEntity } from "src/common/root/entities/base.entity";
 import { FeedbacksEntity } from "./feedbacks.entity";
-import { RatingDetailEntity } from "./rating-detail.entity";
+import { RatingDetailEntity } from "../../surveys/entities/rating-detail.entity";
 
 @Entity("feedback_detail_tbl")
 export class FeedbackDetailEntity extends BaseEntity{

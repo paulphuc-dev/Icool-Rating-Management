@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { ScaleOptionEntity } from "./scale-option.entity";
 import { BaseEntity } from "src/common/root/entities/base.entity";
+import { ScaleOptionEntity } from "./scale-option.entity";
 
 @Entity("rating_survey_tbl")
 export class SurveyEntity extends BaseEntity{
@@ -27,5 +27,6 @@ export class SurveyEntity extends BaseEntity{
 
   @OneToMany(() => ScaleOptionEntity, (t) => t.ratingSurvey)
   scaleOptions: ScaleOptionEntity[];
+  
 }
 

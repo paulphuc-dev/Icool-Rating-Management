@@ -1,8 +1,8 @@
 import { Expose, Type } from "class-transformer";
-import { DetailResponseDto } from "./detail.response.dto";
+import { RatingDetailDto } from "src/modules/surveys/dto/response/detail.reponse.dto";
 
 export class FeedbackDetailResponseDto {
   @Expose()
-  @Type(() => DetailResponseDto)
-  ratingDetail: DetailResponseDto[];
+  @Type(() => RatingDetailDto)
+  ratingDetail: RatingDetailDto[];
 }

@@ -79,9 +79,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
           case 'FEEDBACKS':
             message = ERROR_MESSAGES.FEEDBACKS.CANNOT_CREATED;
             break;
-          /*default:
-            message = ERROR_MESSAGES.INVALID_PAYLOAD;
-            break;*/
         }
         break;
     }

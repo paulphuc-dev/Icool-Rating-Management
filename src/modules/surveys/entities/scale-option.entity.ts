@@ -6,10 +6,10 @@ import {
   OneToMany,
   OneToOne, 
   JoinColumn } from "typeorm";
-import { SurveyEntity } from "src/modules/feedbacks/entities/survey.entity";
 import { BaseEntity } from "src/common/root/entities/base.entity";
 import { RatingDetailEntity } from "./rating-detail.entity";
 import { FilesEntity } from "./files.entity";
+import { SurveyEntity } from "src/modules/surveys/entities/survey.entity";
 import { FeedbacksEntity } from "src/modules/feedbacks/entities/feedbacks.entity";
 
 @Entity("rating_scale_option_tbl")

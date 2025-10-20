@@ -15,14 +15,5 @@ export class StoresResponseDto{
     address: string;
 
     @Expose()
-    district: string;
-
-    @Expose()
-    tel: string;
-
-    @Expose()
     createdDate: string;
-
-    @Expose()
-    createdBy: string;
 }

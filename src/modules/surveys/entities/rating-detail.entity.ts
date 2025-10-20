@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm"
 import { BaseEntity } from "src/common/root/entities/base.entity"
 import { CategoryEntity } from "./categories.entity";
-import { ScaleOptionEntity } from "./scale-option.entity";
-import { FeedbackDetailEntity } from "./feedback-detail.entity";
+import { ScaleOptionEntity } from "src/modules/surveys/entities/scale-option.entity";
+import { FeedbackDetailEntity } from "../../feedbacks/entities/feedback-detail.entity";
 
 @Entity("rating_detail_tbl")
 export class RatingDetailEntity extends BaseEntity{

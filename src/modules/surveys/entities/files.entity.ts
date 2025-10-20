@@ -41,6 +41,6 @@ export class FilesEntity extends BaseEntity{
   drafted: boolean;
 
   @OneToOne(() => ScaleOptionEntity, t => t.emoji)
-  @JoinColumn() 
+  @JoinColumn({name: "source_id"}) 
   scaleOption: ScaleOptionEntity;
 }

@@ -18,7 +18,7 @@ export class FeedbacksController {
     
     constructor(private readonly feedbackService: FeedbacksService){}
 
-    @Get("/")
+    @Get('/')
     @ApiOperation({ summary: SwaggerDescription.getAll })
     async getFeedbacks(@Query() getFeedbackReq: GetFeedBackDto): HttpResponse<IPaginate>{
         const data = await this.feedbackService.getFeedbacks(getFeedbackReq)
@@ -29,7 +29,7 @@ export class FeedbacksController {
         };
     }
 
-    @Get("/statistic")
+    @Get('/statistic')
     @ApiOperation({ summary: SwaggerDescription.getStatistic })
     async statistic(@Query() statisticReq: StatisticRequestDto): HttpResponse<IStatistic>{
         const data = await this.feedbackService.getStatistic(statisticReq)
@@ -50,7 +50,7 @@ export class FeedbacksController {
         }
     }*/
 
-    @Post("/")
+    @Post('/')
     @ApiOperation({ summary: SwaggerDescription.post })
     async createFeedback(@Body() feedback: FeedbackDto): HttpResponse<IFeedback>{
         const data = await this.feedbackService.createFeedback(feedback)
