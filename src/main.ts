@@ -13,7 +13,6 @@ async function bootstrap() {
   SwaggerConfig.setup(app);
   const port = process.env.HTTP_PORT ?? 3000;
   await app.listen(port);
-  console.log(`🚀 Server is running on: http://localhost:${port}`);
   console.log(`📘 Swagger docs available at: http://localhost:${port}/api-docs`);
 }
 bootstrap();

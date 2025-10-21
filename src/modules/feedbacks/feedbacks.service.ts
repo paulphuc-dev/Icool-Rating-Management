@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import * as ExcelJS from 'exceljs';
 import { Repository, DataSource } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FeedbacksEntity } from './entities/feedbacks.entity';
@@ -12,6 +13,7 @@ import { FeedbackResponseDto } from './dto/response/feedback-response.dto';
 import { StatisticRequestDto } from './dto/request/statistic.request.dto';
 import { groupByLabel } from './func/flat-data';
 import { IStatistic, IData } from './interfaces/statistic.interface';
+import { feedbackColumn } from './consts/column';
 
 @Injectable()
 export class FeedbacksService {
@@ -80,6 +82,95 @@ export class FeedbacksService {
         const statisticData: IData[] = groupByLabel(raw);
         return {statisticData}
     }
+
+    async getData(){
+        const query = this._feedbackRepo
+            .createQueryBuilder('feedback')
+            .innerJoinAndSelect('feedback.store', 'store') 
+            .innerJoinAndSelect('feedback.scaleOption', 'scaleOption') 
+            .innerJoinAndSelect('feedback.feedbackDetails', 'feedbackDetails')   
+            .innerJoinAndSelect('feedbackDetails.ratingDetail', 'ratingDetail') 
+            .where('feedback.active = :active', { active: true })
+            .select([
+                'feedback.id',
+                'feedback.regionId',
+                'feedback.regionName',
+                'feedback.phoneNumber',
+                'feedback.ratingDate',
+                'feedback.content',
+                'store.name',
+                'scaleOption.scoreValue',
+                'feedbackDetails.feedbackId',
+                'ratingDetail.title'
+            ]).orderBy('feedback.ratingDate', 'DESC')
+
+        const data = await query.getMany();
+        const formattedData = data.map((feedback) => ({
+            id: feedback.id,
+            regionId: feedback.regionId,
+            regionName: feedback.regionName,
+            phoneNumber: feedback.phoneNumber,
+            storeName: feedback.store?.name,
+            scoreValue: feedback.scaleOption?.scoreValue,
+            content: feedback.content,
+            ratingDate: feedback.ratingDate,
+            ratingDetailTitles: feedback.feedbackDetails.map(
+                (detail) => detail.ratingDetail?.title
+            ),
+        }));
+        return formattedData;
+    }
+
+    async getExport(): Promise<Buffer> {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Báo cáo đánh giá');
+        const data = await this.getData();
+
+        worksheet.columns = feedbackColumn;
+        const headerRow = worksheet.getRow(1);
+        headerRow.eachCell((cell) => {
+            cell.font = { bold: true };
+            cell.alignment = { horizontal: 'center', vertical: 'middle' };
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFEFEFEF' }, 
+            };
+            cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+            };
+        });
+
+        data.forEach((fb) => {
+            const detailText = Array.isArray(fb.ratingDetailTitles)
+            ? fb.ratingDetailTitles.join('\n') 
+            : '';
+
+            worksheet.addRow({
+                id: fb.id,
+                regionId: fb.regionId,
+                regionName: fb.regionName,
+                phoneNumber: fb.phoneNumber,
+                ratingDate: fb.ratingDate,
+                store: fb.storeName,
+                score: fb.scoreValue,
+                content: fb.content,
+                ratingDetail: detailText,
+            });
+        });
+
+        worksheet.getColumn('ratingDetail').alignment = {
+            wrapText: true,
+            vertical: 'top',
+        };
+
+        const arrayBuffer = await workbook.xlsx.writeBuffer();
+        return Buffer.from(arrayBuffer);
+    }
+
 
     async createFeedback(feedbackDto: FeedbackDto): Promise<IFeedback> {
         

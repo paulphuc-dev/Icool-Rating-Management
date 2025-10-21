@@ -9,9 +9,6 @@ export class FeedbackResponseDto {
   id: string;
 
   @Expose()
-  optionId: number;
-
-  @Expose()
   regionId: number;
 
   @Expose()
@@ -42,5 +39,5 @@ export class FeedbackResponseDto {
   
   @Expose()
   @Type(() => FeedbackDetailResponseDto)
-  feedbackDetails: FeedbackDetailResponseDto;
+  feedbackDetails: FeedbackDetailResponseDto[];
 }

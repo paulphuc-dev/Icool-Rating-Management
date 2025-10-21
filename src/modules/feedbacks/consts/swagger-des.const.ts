@@ -6,5 +6,7 @@ export const SwaggerDescription = {
 
     post: Summary.POST_SUMMARY,
 
-    getStatistic:  Summary.GET_STATISTIC
+    getStatistic:  Summary.GET_STATISTIC,
+
+    getExport: Summary.GET_EXPORT
 }
