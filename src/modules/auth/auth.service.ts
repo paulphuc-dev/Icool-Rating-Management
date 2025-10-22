@@ -7,6 +7,7 @@ import { GroupICEntity } from './entities/group-ic.entity';
 import { IPayload } from './interfaces/payload.interface';
 import { IPermissions } from './interfaces/permission.interface';
 import { hardcode } from './enums/hardcode.const';
+import { loginFailed, forbid, invalidToken } from 'src/common/consts/message';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +28,7 @@ export class AuthService {
       const payload = this.jwtService.verify<T>(actualToken);
       return payload;
     } catch (error) {
-      throw new UnauthorizedException('Invalid or expired token');
+      throw new UnauthorizedException(invalidToken);
     }
   }
 
@@ -63,7 +64,7 @@ export class AuthService {
 
     const user = await query.getOne()
     if(!user){
-      throw new UnauthorizedException('Invalid username or password'); 
+      throw new UnauthorizedException(loginFailed); 
     }
 
     const permissions = await this.getPermission(user.id);
@@ -75,7 +76,7 @@ export class AuthService {
     }
 
     if(!flag){
-      throw new UnauthorizedException('You do not have permission to access');
+      throw new UnauthorizedException(forbid);
     }
 
     const payload = {
