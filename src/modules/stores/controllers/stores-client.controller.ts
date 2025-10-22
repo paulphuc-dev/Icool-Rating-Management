@@ -1,15 +1,15 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { SwaggerDescription } from './consts/swagger-des.const';
-import { IPaginate } from './interfaces/paginate.interface';
+import { SwaggerDescription } from '../consts/swagger-des.const';
+import { IPaginate } from '../interfaces/paginate.interface';
 import type { HttpResponse } from 'src/common/utils/response';
-import { StoresService } from './stores.service';
+import { StoresService } from '../stores.service';
 import { StatusCode } from 'src/common/consts/http-code';
 import { getDataSuccessfully } from 'src/common/consts/message';
 
 @ApiTags("Stores")
 @Controller('stores')
-export class StoresController {
+export class StoresClientController {
     
     constructor(private readonly storesService: StoresService){}
 

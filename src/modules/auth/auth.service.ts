@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UsersEntity } from './entities/users.entity';
 import { GroupICEntity } from './entities/group-ic.entity';
 import { IPayload } from './interfaces/payload.interface';
-import { IPermissions } from './interfaces/permission.interface';
+import { IGroups } from './interfaces/groups.interface';
 import { hardcode } from './enums/hardcode.const';
 import { loginFailed, forbid, invalidToken } from 'src/common/consts/message';
 
@@ -33,8 +33,8 @@ export class AuthService {
   }
 
 
-  async getPermission(userId: string): Promise<IPermissions[]>{
-    const permissions = await this._groupICRepo
+  async getGroups(userId: string): Promise<IGroups[]>{
+    const groups = await this._groupICRepo
       .createQueryBuilder("groupIc")
       .innerJoin("groupIc.groupMangers", "groupMangers")
       .where("groupMangers.managerId = :managerId", { managerId: userId })
@@ -44,11 +44,29 @@ export class AuthService {
       ])
       .getRawMany();
 
-    return permissions.map(p => ({
+    return groups.map(p => ({
       code: p.code,
       name: p.name,
     }));
   }
+
+  async getPermissions(userId: string, group: string): Promise<string[]> {
+    
+    const groups = await this._groupICRepo
+      .createQueryBuilder("groupIc")
+      .innerJoin("groupIc.groupMangers", "groupMangers")
+      .select("groupIc.permissions")
+      .where("groupMangers.managerId = :managerId", { managerId: userId })
+      .andWhere("groupIc.code = :code", {code: group})
+      .getMany();
+
+    const permissionsArrays = groups.map(g => JSON.parse(g.permissions));
+    const allPermissions = ([] as string[]).concat(...permissionsArrays);
+    const uniquePermissions = Array.from(new Set(allPermissions));
+    return uniquePermissions;
+
+  }
+
 
   async login(username: string, password: string): Promise<IPayload> {
     
@@ -67,13 +85,14 @@ export class AuthService {
       throw new UnauthorizedException(loginFailed); 
     }
 
-    const permissions = await this.getPermission(user.id);
-    for (const permission of permissions){
-      if (permission.code == hardcode.DEFAULT_PERMISSION) {
+    const groups = await this.getGroups(user.id);
+    for (const group of groups){
+      if (group.code == hardcode.DEFAULT_GROUP) {
         flag = true;
         break;
       }
     }
+    const permissions = await this.getPermissions(user.id, hardcode.DEFAULT_GROUP)
 
     if(!flag){
       throw new UnauthorizedException(forbid);
@@ -83,6 +102,7 @@ export class AuthService {
       sub: user.id,
       username: user.sale,
       name: user.name,
+      permissions,
       storeIds: user.userStores.map(us => us.storeId),
     };
 
@@ -91,6 +111,7 @@ export class AuthService {
       access_token: token,
       username: payload.username,
       name: payload.name,
+      permissions,
       storeIds: payload.storeIds
     };
   }

@@ -1,3 +1,3 @@
 export enum hardcode {
-    DEFAULT_PERMISSION = "RATINGS",
+    DEFAULT_GROUP = "RATINGS",
 }

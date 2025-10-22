@@ -14,7 +14,7 @@ export class GroupICEntity{
     code: string;
 
     @Column("nvarchar")
-    permission: string;
+    permissions: string;
 
     @Column("bit")
     active: boolean;

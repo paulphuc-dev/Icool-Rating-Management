@@ -1,4 +1,4 @@
-export interface IPermissions{
+export interface IGroups{
     code: string;
     name: string;
 }

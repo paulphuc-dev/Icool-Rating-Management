@@ -1,15 +1,15 @@
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
-import { ISurvey } from './interfaces/ISurvey.interface';
+import { ISurvey } from '../interfaces/ISurvey.interface';
 import type { HttpResponse } from 'src/common/utils/response';
-import { SurveysService } from './surveys.service';
+import { SurveysService } from '../surveys.service';
 import { StatusCode } from 'src/common/consts/http-code';
 import { getDataSuccessfully } from 'src/common/consts/message';
-import { SwaggerDescription } from './consts/swagger-des.const';
+import { SwaggerDescription } from '../consts/swagger-des.const';
 
 @ApiTags('Surveys')
 @Controller('surveys')
-export class SurveysController {
+export class SurveysClientController {
     constructor(private readonly surveyService: SurveysService){}
 
     @Get('/')
