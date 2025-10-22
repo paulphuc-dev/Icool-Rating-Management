@@ -24,7 +24,7 @@ export class FeedbacksService {
         private readonly dataSource: DataSource,        
     ){}
 
-    async getFeedbacks(getFeedbackReq: GetFeedBackDto): Promise<IPaginate>{
+    async getFeedbacks(getFeedbackReq: GetFeedBackDto, stores: string[]): Promise<IPaginate>{
 
         const page = getFeedbackReq.page ?? 1;
         const limit = getFeedbackReq.limit ?? 10;
@@ -35,6 +35,7 @@ export class FeedbacksService {
             .innerJoinAndSelect('feedback.feedbackDetails', 'feedbackDetails')   
             .innerJoinAndSelect('feedbackDetails.ratingDetail', 'ratingDetail') 
             .where('feedback.active = :active', { active: true })
+            .andWhere('store.code IN (:...storeIds)', { storeIds: stores })
             .orderBy('feedback.createdAt', 'DESC')
             .skip((page - 1) * limit)
             .take(limit); 
@@ -56,17 +57,17 @@ export class FeedbacksService {
         };
     }
 
-    async getStatistic(statisticReq: StatisticRequestDto): Promise<IStatistic> {
+    async getStatistic(statisticReq: StatisticRequestDto, stores: string[]): Promise<IStatistic> {
         
         const query = this._feedbackRepo
             .createQueryBuilder('feedback')
             .innerJoin('feedback.scaleOption', 'scaleOption')
-            .where('feedback.active = :active', { active: true });
+            .innerJoin('feedback.store', 'store')
+            .where('feedback.active = :active', { active: true })
+            .andWhere('store.code IN (:...storeIds)', { storeIds: stores });
 
         if (statisticReq.storeCode) {
-
-            query.innerJoin('feedback.store', 'store')
-            .andWhere('store.code = :code', { code: statisticReq.storeCode })
+            query.andWhere('store.code = :code', { code: statisticReq.storeCode })
             .select(['store.name AS label', 'scaleOption.scoreValue AS star','COUNT(*) AS quantity'])
             .groupBy('store.name')
             .addGroupBy('scaleOption.scoreValue');
@@ -83,7 +84,7 @@ export class FeedbacksService {
         return {statisticData}
     }
 
-    async getData(){
+    async getData(stores: string[]){
         const query = this._feedbackRepo
             .createQueryBuilder('feedback')
             .innerJoinAndSelect('feedback.store', 'store') 
@@ -91,6 +92,7 @@ export class FeedbacksService {
             .innerJoinAndSelect('feedback.feedbackDetails', 'feedbackDetails')   
             .innerJoinAndSelect('feedbackDetails.ratingDetail', 'ratingDetail') 
             .where('feedback.active = :active', { active: true })
+            .andWhere('store.code IN (:...storeIds)', { storeIds: stores })
             .select([
                 'feedback.id',
                 'feedback.regionId',
@@ -121,10 +123,10 @@ export class FeedbacksService {
         return formattedData;
     }
 
-    async getExport(): Promise<Buffer> {
+    async getExport(stores: string[]): Promise<Buffer> {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Báo cáo đánh giá');
-        const data = await this.getData();
+        const data = await this.getData(stores);
 
         worksheet.columns = feedbackColumn;
         const headerRow = worksheet.getRow(1);
@@ -166,7 +168,6 @@ export class FeedbacksService {
             wrapText: true,
             vertical: 'top',
         };
-
         const arrayBuffer = await workbook.xlsx.writeBuffer();
         return Buffer.from(arrayBuffer);
     }
@@ -212,8 +213,7 @@ export class FeedbacksService {
             const formatted = plainToInstance(FeedbackResponseDto, fullFeedback, {
                 excludeExtraneousValues: true,
             });
-            return { data: formatted};
-            
+            return { data: formatted};    
         } catch (error) {
             await queryRunner.rollbackTransaction();
             throw error;

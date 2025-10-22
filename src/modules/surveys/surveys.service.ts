@@ -25,14 +25,11 @@ export class SurveysService {
         .select([
             'survey.id',
             'survey.title',
-
             'options.id',
             'options.scoreValue',
             'options.title',
-
             'emoji.id',
             'emoji.url',
-
             'ratingDetail.id',
             'ratingDetail.title'
         ])

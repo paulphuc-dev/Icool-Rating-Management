@@ -6,7 +6,15 @@ export class SwaggerConfig {
       .setTitle('My API')
       .setDescription('API documentation')
       .setVersion('1.0')
-      .addBearerAuth() 
+      .addBearerAuth({
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          name: 'Authorization',
+          description: 'Enter JWT token',
+          in: 'header',
+        },
+      'Bearer') 
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
@@ -19,6 +27,10 @@ export class SwaggerConfig {
       }, {} as typeof document.paths);
     
     document.paths = sortedPaths; 
-    SwaggerModule.setup('api-docs', app, document);
+    SwaggerModule.setup('api-docs', app, document, {
+      swaggerOptions: {
+        persistAuthorization: true,
+      }
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { StoreBaseEntity } from "src/common/root/entities/store-base.entitiy";
 import { FeedbacksEntity } from "../../feedbacks/entities/feedbacks.entity";
+import { UserStoresEntity } from "src/modules/auth/entities/user-stores.entity";
 @Entity("cuahang")
 export class StoresEntity extends StoreBaseEntity{
   @PrimaryGeneratedColumn("uuid")
@@ -38,4 +39,8 @@ export class StoresEntity extends StoreBaseEntity{
 
   @OneToMany(()=> FeedbacksEntity, (t) => t.store)
   feedbacks: FeedbacksEntity[];
+
+  @OneToMany(()=> UserStoresEntity, (t) => t.store)
+  userStores: UserStoresEntity[];
+
 }
