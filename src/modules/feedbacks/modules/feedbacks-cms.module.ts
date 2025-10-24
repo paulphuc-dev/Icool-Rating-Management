@@ -12,7 +12,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
     TypeOrmModule.forFeature([
       FeedbacksEntity, 
       FeedbackDetailEntity
-    ]), 
+    ], 'Karaoke'), 
   ],
   controllers: [FeedbacksCMSController],
   providers: [FeedbacksService],

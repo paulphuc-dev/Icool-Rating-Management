@@ -1,8 +1,8 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get} from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { SwaggerDescription } from '../consts/swagger-des.const';
-import { IPaginate } from '../interfaces/paginate.interface';
-import type { HttpResponse } from 'src/common/utils/response';
+import { IResponse } from '../interfaces/response.interface';
+import type { HttpResponse } from 'src/common/utils/response.util';
 import { StoresService } from '../stores.service';
 import { StatusCode } from 'src/common/consts/http-code';
 import { getDataSuccessfully } from 'src/common/consts/message';
@@ -15,7 +15,7 @@ export class StoresClientController {
 
     @Get('/')
     @ApiOperation({ summary: SwaggerDescription.getAll })
-    async getStores(): HttpResponse<IPaginate>{
+    async getStores(): HttpResponse<IResponse>{
 
         const data = await this.storesService.getStores();
         return {
@@ -23,6 +23,5 @@ export class StoresClientController {
             message: getDataSuccessfully,
             data,
         };
-
     }
 }

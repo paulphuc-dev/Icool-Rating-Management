@@ -1,7 +1,7 @@
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
 import { ISurvey } from '../interfaces/ISurvey.interface';
-import type { HttpResponse } from 'src/common/utils/response';
+import type { HttpResponse } from 'src/common/utils/response.util';
 import { SurveysService } from '../surveys.service';
 import { StatusCode } from 'src/common/consts/http-code';
 import { getDataSuccessfully } from 'src/common/consts/message';

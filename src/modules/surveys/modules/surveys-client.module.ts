@@ -16,7 +16,7 @@ import { ScaleOptionEntity } from '../entities/scale-option.entity';
         FilesEntity,
         RatingDetailEntity,
         ScaleOptionEntity
-    ]), 
+    ], 'Karaoke'), 
   ],
   controllers: [SurveysClientController],
   providers: [SurveysService]

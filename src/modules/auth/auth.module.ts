@@ -26,7 +26,7 @@ import { JwtAuthGuard } from './guards/auth.guard';
         UsersEntity,
         GroupICEntity,
         GroupManagerEntity
-    ]),
+    ], 'Karaoke'),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtAuthGuard], 

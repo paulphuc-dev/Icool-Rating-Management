@@ -2,9 +2,9 @@ import { Controller, Get, Query, Res, Req, UseGuards, ForbiddenException } from 
 import type { Response } from 'express';
 import { ApiTags, ApiOperation, ApiResponse, ApiProduces, ApiBearerAuth } from '@nestjs/swagger';
 import { SwaggerDescription } from '../consts/swagger-des.const';
-import { GetFeedBackDto } from '../dto/response/get-feedback.dto';
+import { GetFeedBackDto } from '../dto/request/get-feedback.dto';
 import { StatisticRequestDto } from '../dto/request/statistic.request.dto';
-import type { HttpResponse} from 'src/common/utils/response';
+import type { HttpResponse} from 'src/common/utils/response.util';
 import { StatusCode } from 'src/common/consts/http-code';
 import { FeedbacksService } from '../feedbacks.service';
 import { IPaginate } from '../interfaces/paginate.interface';

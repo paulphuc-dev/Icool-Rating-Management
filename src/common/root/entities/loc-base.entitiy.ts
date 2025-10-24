@@ -1,11 +1,8 @@
 import { Column } from "typeorm";
 
-export abstract class StoreBaseEntity{
+export abstract class LocBaseEntity{
   @Column("bit")
   active: boolean;
-
-  @Column("varchar", {name:"ref_code"})
-  refCode: string;
 
   @Column("int", {name:"trangthai"})
   status: number;

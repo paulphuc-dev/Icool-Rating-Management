@@ -2,18 +2,18 @@ import { Injectable} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { StoresEntity } from './entities/stores.entity';
-import { IPaginate } from './interfaces/paginate.interface';
+import { IResponse } from './interfaces/response.interface';
 import { StoresResponseDto } from './dto/store-response.dto';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class StoresService {
     constructor(
-        @InjectRepository(StoresEntity)
+        @InjectRepository(StoresEntity, 'Karaoke')
         private readonly _storeRepo:  Repository<StoresEntity>
     ){}
 
-    async getStores(): Promise<IPaginate>{
+    async getStores(): Promise<IResponse>{
         const query = this._storeRepo
             .createQueryBuilder('store')
             .where('store.active = :active', { active: true })
@@ -23,8 +23,7 @@ export class StoresService {
                 'store.name',
                 'store.address',
                 'store.createdDate'
-            ])
-            .orderBy('store.id', 'ASC') 
+            ]).orderBy('store.id', 'ASC') 
             
         const res = await query.getMany(); 
         const data = plainToInstance(StoresResponseDto, res, {excludeExtraneousValues: true})

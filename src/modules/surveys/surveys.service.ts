@@ -10,7 +10,7 @@ import { SurveyResponseDto } from './dto/response/survey-response.dto';
 export class SurveysService {
 
     constructor(
-        @InjectRepository(SurveyEntity)
+        @InjectRepository(SurveyEntity, 'Karaoke')
         private readonly _surveyRepo: Repository<SurveyEntity>
     ){}
 

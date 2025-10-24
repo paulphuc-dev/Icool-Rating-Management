@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as ExcelJS from 'exceljs';
 import { Repository, DataSource } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
 import { FeedbacksEntity } from './entities/feedbacks.entity';
 import { FeedbackDetailEntity } from './entities/feedback-detail.entity';
-import { GetFeedBackDto } from './dto/response/get-feedback.dto';
+import { GetFeedBackDto } from './dto/request/get-feedback.dto';
 import { IPaginate } from './interfaces/paginate.interface';
 import { IFeedback } from './interfaces/feedback.interface';
 import { FeedbackDto } from './dto/request/feedback-request.dto';
@@ -19,8 +19,10 @@ import { feedbackColumn } from './consts/column';
 export class FeedbacksService {
 
     constructor(
-        @InjectRepository(FeedbacksEntity)
+        @InjectRepository(FeedbacksEntity, 'Karaoke')
         private readonly _feedbackRepo: Repository<FeedbacksEntity>,
+
+        @InjectDataSource('Karaoke')
         private readonly dataSource: DataSource,        
     ){}
 

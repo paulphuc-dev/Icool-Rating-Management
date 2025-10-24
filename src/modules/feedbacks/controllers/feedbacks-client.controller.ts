@@ -2,7 +2,7 @@ import { Controller, Post, Body} from '@nestjs/common';
 import { ApiTags, ApiOperation} from '@nestjs/swagger';
 import { SwaggerDescription } from '../consts/swagger-des.const';
 import { FeedbackDto } from '../dto/request/feedback-request.dto';
-import type { HttpResponse} from 'src/common/utils/response';
+import type { HttpResponse} from 'src/common/utils/response.util';
 import { StatusCode } from 'src/common/consts/http-code';
 import { FeedbacksService } from '../feedbacks.service';
 import { IFeedback } from '../interfaces/feedback.interface';

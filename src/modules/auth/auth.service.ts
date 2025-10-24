@@ -13,9 +13,9 @@ import { loginFailed, forbid, invalidToken } from 'src/common/consts/message';
 export class AuthService {
 
   constructor(
-    @InjectRepository(UsersEntity)
+    @InjectRepository(UsersEntity, 'Karaoke')
     private readonly _userRepo: Repository<UsersEntity>,
-    @InjectRepository(GroupICEntity)
+    @InjectRepository(GroupICEntity, 'Karaoke')
     private readonly _groupICRepo: Repository<GroupICEntity>,
     private readonly jwtService: JwtService,
   ) {}

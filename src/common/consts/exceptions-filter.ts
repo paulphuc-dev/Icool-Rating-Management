@@ -6,7 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
-import { IErrorType } from '../utils/response';
+import { IErrorType } from '../utils/response.util';
 import { ERROR_MESSAGES } from './error-messages';
 import { StatusCode } from './http-code';
 
