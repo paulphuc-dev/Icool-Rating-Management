@@ -1,5 +1,5 @@
-import { Summary } from "../enums/description.enum";
+import { Summary } from '../enums/description.enum';
 
 export const SwaggerDescription = {
-    getData: Summary.GET_SUMMARY
-}
+  getData: Summary.GET_SUMMARY,
+};

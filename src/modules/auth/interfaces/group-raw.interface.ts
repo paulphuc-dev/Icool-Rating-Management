@@ -1,4 +1,4 @@
-export interface IGroups {
+export interface GroupRaw {
   code: string;
   name: string;
 }

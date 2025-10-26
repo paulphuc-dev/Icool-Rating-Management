@@ -6,11 +6,11 @@ import { RegionsCMSModule } from './modules/regions-cms.module';
   imports: [
     RouterModule.register([
       {
-        path:'cms',
-        module: RegionsCMSModule
-      }
+        path: 'cms',
+        module: RegionsCMSModule,
+      },
     ]),
-    RegionsCMSModule
-  ]
+    RegionsCMSModule,
+  ],
 })
 export class RegionsModule {}

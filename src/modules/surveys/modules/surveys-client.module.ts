@@ -9,16 +9,19 @@ import { RatingDetailEntity } from '../entities/rating-detail.entity';
 import { ScaleOptionEntity } from '../entities/scale-option.entity';
 
 @Module({
-  imports:[
-    TypeOrmModule.forFeature([ 
+  imports: [
+    TypeOrmModule.forFeature(
+      [
         CategoryEntity,
         SurveyEntity,
         FilesEntity,
         RatingDetailEntity,
-        ScaleOptionEntity
-    ], 'Karaoke'), 
+        ScaleOptionEntity,
+      ],
+      'Karaoke',
+    ),
   ],
   controllers: [SurveysClientController],
-  providers: [SurveysService]
+  providers: [SurveysService],
 })
 export class SurveysClientModule {}

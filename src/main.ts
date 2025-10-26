@@ -13,6 +13,12 @@ async function bootstrap() {
   SwaggerConfig.setup(app);
   const port = process.env.HTTP_PORT ?? 3000;
   await app.listen(port);
-  console.log(`📘 Swagger docs available at: http://localhost:${port}/api-docs`);
+  console.log(
+    `📘 Swagger docs available at: http://localhost:${port}/api-docs`,
+  );
 }
-bootstrap();
+
+bootstrap().catch((error) => {
+  console.error('❌ Application failed to start:', error);
+  process.exit(1);
+});

@@ -9,13 +9,13 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([
-      FeedbacksEntity, 
-      FeedbackDetailEntity
-    ], 'Karaoke'), 
+    TypeOrmModule.forFeature(
+      [FeedbacksEntity, FeedbackDetailEntity],
+      'Karaoke',
+    ),
   ],
   controllers: [FeedbacksCMSController],
   providers: [FeedbacksService],
-  exports: [FeedbacksService]
+  exports: [FeedbacksService],
 })
 export class FeedbacksCMSModule {}

@@ -1,4 +1,8 @@
-import { IFlatRow, IRatingLevel, IData } from "../interfaces/statistic.interface";
+import {
+  IFlatRow,
+  IRatingLevel,
+  IData,
+} from '../interfaces/statistic.interface';
 export function groupByLabel(data: IFlatRow[]): IData[] {
   const map = new Map<string, { values: IRatingLevel[]; total: number }>();
 
@@ -11,12 +15,12 @@ export function groupByLabel(data: IFlatRow[]): IData[] {
 
     const entry = map.get(label)!;
     entry.values.push({ star, quantity });
-    entry.total += quantity; 
+    entry.total += quantity;
   }
 
   return Array.from(map.entries()).map(([label, { values, total }]) => ({
     label,
     values,
-    ratingTotal: total, 
+    ratingTotal: total,
   }));
 }

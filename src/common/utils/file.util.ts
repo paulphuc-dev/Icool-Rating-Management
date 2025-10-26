@@ -7,7 +7,11 @@ export function createUploadPath(): string {
   return uploadDir;
 }
 
-export function saveFile(folder: string, fileName: string, buffer: Buffer): string {
+export function saveFile(
+  folder: string,
+  fileName: string,
+  buffer: Buffer,
+): string {
   const filePath = path.join(folder, fileName);
   fs.writeFileSync(filePath, buffer);
   return filePath;

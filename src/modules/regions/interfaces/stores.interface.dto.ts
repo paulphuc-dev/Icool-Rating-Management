@@ -1,3 +1,3 @@
-export interface IStoresResponse{
-    name: string;
+export interface IStoresResponse {
+  name: string;
 }

@@ -9,12 +9,9 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([
-      RegionEntity,
-      StoresEntity
-    ], 'Assets')
+    TypeOrmModule.forFeature([RegionEntity, StoresEntity], 'Assets'),
   ],
   controllers: [RegionsCMSController],
-  providers: [RegionsService]
+  providers: [RegionsService],
 })
 export class RegionsCMSModule {}

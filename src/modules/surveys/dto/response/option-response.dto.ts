@@ -1,23 +1,22 @@
-import { Expose, Type } from "class-transformer";
-import { FileResponseDto } from "./file-response.dto";
-import { RatingDetailDto } from "./detail.reponse.dto";
+import { Expose, Type } from 'class-transformer';
+import { FileResponseDto } from './file-response.dto';
+import { RatingDetailDto } from './detail.reponse.dto';
 
-export class OptionResponseDto{
+export class OptionResponseDto {
+  @Expose()
+  id: number;
 
-    @Expose()
-    id: number;
-    
-    @Expose()
-    scoreValue: number;
+  @Expose()
+  scoreValue: number;
 
-    @Expose()
-    title: string;
+  @Expose()
+  title: string;
 
-    @Expose()
-    @Type(() => FileResponseDto)
-    emoji: FileResponseDto;
+  @Expose()
+  @Type(() => FileResponseDto)
+  emoji: FileResponseDto;
 
-    @Expose({ name: 'ratingDetail' })
-    @Type(()=> RatingDetailDto)
-    detail: RatingDetailDto[];
+  @Expose({ name: 'ratingDetail' })
+  @Type(() => RatingDetailDto)
+  detail: RatingDetailDto[];
 }

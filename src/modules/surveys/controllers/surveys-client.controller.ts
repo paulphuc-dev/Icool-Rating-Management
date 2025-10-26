@@ -10,16 +10,16 @@ import { SwaggerDescription } from '../consts/swagger-des.const';
 @ApiTags('Surveys')
 @Controller('surveys')
 export class SurveysClientController {
-    constructor(private readonly surveyService: SurveysService){}
+  constructor(private readonly surveyService: SurveysService) {}
 
-    @Get('/')
-    @ApiOperation({ summary: SwaggerDescription.getAll })
-    async getSurvey(@Query('star') star: number): HttpResponse<ISurvey | null>{
-        const data = await this.surveyService.getSurvey(star);
-        return {
-            statusCode: StatusCode.OK,
-            message: getDataSuccessfully,
-            data,
-        }
-    }
+  @Get('/')
+  @ApiOperation({ summary: SwaggerDescription.getAll })
+  async getSurvey(@Query('star') star: number): HttpResponse<ISurvey | null> {
+    const data = await this.surveyService.getSurvey(star);
+    return {
+      statusCode: StatusCode.OK,
+      message: getDataSuccessfully,
+      data,
+    };
+  }
 }

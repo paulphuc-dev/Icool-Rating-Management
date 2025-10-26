@@ -1,9 +1,8 @@
-import { Expose } from "class-transformer";
-export class FileResponseDto{
+import { Expose } from 'class-transformer';
+export class FileResponseDto {
+  @Expose()
+  id: number;
 
-    @Expose()
-    id: number;
-    
-    @Expose()
-    url: string;
+  @Expose()
+  url: string;
 }

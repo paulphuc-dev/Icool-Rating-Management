@@ -12,7 +12,7 @@ import { RegionsModule } from './modules/regions/regions.module';
     FeedbacksModule,
     SurveysModule,
     RegionsModule,
-    DatabaseModule
+    DatabaseModule,
   ],
   controllers: [],
   providers: [],

@@ -1,12 +1,11 @@
-export class FileRequestDto{
+export class FileRequestDto {
+  name: string;
 
-    name: string;
+  path: string;
 
-    path: string;
+  extension: string;
 
-    extension: string;
+  mimetype: string;
 
-    mimetype: string;
-
-    size: number;
+  size: number;
 }

@@ -1,4 +1,4 @@
-import { Controller, Get} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { SwaggerDescription } from '../consts/swagger-des.const';
 import { IResponse } from '../interfaces/response.interface';
@@ -7,21 +7,19 @@ import { StoresService } from '../stores.service';
 import { StatusCode } from 'src/common/consts/http-code';
 import { getDataSuccessfully } from 'src/common/consts/message';
 
-@ApiTags("Stores")
+@ApiTags('Stores')
 @Controller('stores')
 export class StoresClientController {
-    
-    constructor(private readonly storesService: StoresService){}
+  constructor(private readonly storesService: StoresService) {}
 
-    @Get('/')
-    @ApiOperation({ summary: SwaggerDescription.getAll })
-    async getStores(): HttpResponse<IResponse>{
-
-        const data = await this.storesService.getStores();
-        return {
-            statusCode: StatusCode.OK,
-            message: getDataSuccessfully,
-            data,
-        };
-    }
+  @Get('/')
+  @ApiOperation({ summary: SwaggerDescription.getAll })
+  async getStores(): HttpResponse<IResponse> {
+    const data = await this.storesService.getStores();
+    return {
+      statusCode: StatusCode.OK,
+      message: getDataSuccessfully,
+      data,
+    };
+  }
 }

@@ -6,7 +6,8 @@ export class SwaggerConfig {
       .setTitle('My API')
       .setDescription('API documentation')
       .setVersion('1.0')
-      .addBearerAuth({
+      .addBearerAuth(
+        {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
@@ -14,23 +15,27 @@ export class SwaggerConfig {
           description: 'Enter JWT token',
           in: 'header',
         },
-      'Bearer') 
+        'Bearer',
+      )
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
 
     const sortedPaths = Object.keys(document.paths)
       .sort((a, b) => a.localeCompare(b))
-      .reduce((acc, key) => {
-        acc[key] = document.paths[key];
-        return acc;
-      }, {} as typeof document.paths);
-    
-    document.paths = sortedPaths; 
+      .reduce(
+        (acc, key) => {
+          acc[key] = document.paths[key];
+          return acc;
+        },
+        {} as typeof document.paths,
+      );
+
+    document.paths = sortedPaths;
     SwaggerModule.setup('api-docs', app, document, {
       swaggerOptions: {
         persistAuthorization: true,
-      }
+      },
     });
   }
 }

@@ -1,10 +1,9 @@
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
 
-export class PermissionResponseDto{
+export class PermissionResponseDto {
+  @Expose()
+  code: string;
 
-    @Expose()
-    code: string;
-
-    @Expose()
-    name: string
+  @Expose()
+  name: string;
 }

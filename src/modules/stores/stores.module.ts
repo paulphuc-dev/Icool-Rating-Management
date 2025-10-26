@@ -6,11 +6,11 @@ import { StoresClientModule } from './modules/stores-client.module';
   imports: [
     RouterModule.register([
       {
-        path:'client',
-        module: StoresClientModule
-      }
+        path: 'client',
+        module: StoresClientModule,
+      },
     ]),
-    StoresClientModule
-  ]
+    StoresClientModule,
+  ],
 })
 export class StoresModule {}

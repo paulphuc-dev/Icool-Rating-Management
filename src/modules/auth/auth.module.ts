@@ -11,7 +11,7 @@ import { JwtAuthGuard } from './guards/auth.guard';
 
 @Module({
   imports: [
-    ConfigModule, 
+    ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -22,14 +22,13 @@ import { JwtAuthGuard } from './guards/auth.guard';
         },
       }),
     }),
-    TypeOrmModule.forFeature([
-        UsersEntity,
-        GroupICEntity,
-        GroupManagerEntity
-    ], 'Karaoke'),
+    TypeOrmModule.forFeature(
+      [UsersEntity, GroupICEntity, GroupManagerEntity],
+      'Karaoke',
+    ),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtAuthGuard], 
+  providers: [AuthService, JwtAuthGuard],
   exports: [JwtModule, AuthService, JwtAuthGuard],
 })
 export class AuthModule {}

@@ -1,11 +1,9 @@
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
 
-export class RatingDetailDto{
+export class RatingDetailDto {
+  @Expose()
+  id: number;
 
-    @Expose()
-    id: number;
-
-    @Expose()
-    title: string;
-
+  @Expose()
+  title: string;
 }

@@ -3,21 +3,20 @@ import { RouterModule } from '@nestjs/core';
 import { FeedbacksClientModule } from './modules/feedback-client.module';
 import { FeedbacksCMSModule } from './modules/feedbacks-cms.module';
 
-
 @Module({
   imports: [
-     RouterModule.register([
+    RouterModule.register([
       {
-        path:'cms',
-        module: FeedbacksCMSModule
+        path: 'cms',
+        module: FeedbacksCMSModule,
       },
       {
-        path:'client',
-        module: FeedbacksClientModule
-      }
-     ]),
-     FeedbacksCMSModule,
-     FeedbacksClientModule
-  ]
+        path: 'client',
+        module: FeedbacksClientModule,
+      },
+    ]),
+    FeedbacksCMSModule,
+    FeedbacksClientModule,
+  ],
 })
 export class FeedbacksModule {}

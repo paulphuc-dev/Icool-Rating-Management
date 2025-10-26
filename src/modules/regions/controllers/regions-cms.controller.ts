@@ -9,23 +9,23 @@ import { getDataSuccessfully } from 'src/common/consts/message';
 import { JwtAuthGuard } from 'src/modules/auth/guards/auth.guard';
 import { PaginateRequestDto } from '../dto/requests/paginate.request.dto';
 
-
 @ApiBearerAuth('Bearer')
 @UseGuards(JwtAuthGuard)
 @ApiTags('Regions')
 @Controller('regions')
 export class RegionsCMSController {
-    
-    constructor(private readonly regionsService: RegionsService){}
+  constructor(private readonly regionsService: RegionsService) {}
 
-    @Get('/qrcode')
-    @ApiOperation({ summary: SwaggerDescription.getData })
-    async getQrCode(@Query() paginate: PaginateRequestDto): HttpResponse<IQrCode>{
-        const data = await this.regionsService.getQRCodes(paginate)
-        return {
-            statusCode: StatusCode.OK,
-            message: getDataSuccessfully,
-            data,
-        }
-    }
+  @Get('/qrcode')
+  @ApiOperation({ summary: SwaggerDescription.getData })
+  async getQrCode(
+    @Query() paginate: PaginateRequestDto,
+  ): HttpResponse<IQrCode> {
+    const data = await this.regionsService.getQRCodes(paginate);
+    return {
+      statusCode: StatusCode.OK,
+      message: getDataSuccessfully,
+      data,
+    };
+  }
 }

@@ -1,28 +1,27 @@
-import { Controller, Post, Body} from '@nestjs/common';
-import { ApiTags, ApiOperation} from '@nestjs/swagger';
+import { Controller, Post, Body } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import { SwaggerDescription } from '../consts/swagger-des.const';
 import { FeedbackDto } from '../dto/request/feedback-request.dto';
-import type { HttpResponse} from 'src/common/utils/response.util';
+import type { HttpResponse } from 'src/common/utils/response.util';
 import { StatusCode } from 'src/common/consts/http-code';
 import { FeedbacksService } from '../feedbacks.service';
 import { IFeedback } from '../interfaces/feedback.interface';
-import { createdSuccessfully} from 'src/common/consts/message';
+import { createdSuccessfully } from 'src/common/consts/message';
 
-@ApiTags("Feedbacks")
+@ApiTags('Feedbacks')
 @Controller('feedbacks')
 export class FeedbacksClientController {
-    
-    constructor(private readonly feedbackService: FeedbacksService){}
+  constructor(private readonly feedbackService: FeedbacksService) {}
 
-    @Post('/')
-    @ApiOperation({ summary: SwaggerDescription.post })
-    async createFeedback(@Body() feedback: FeedbackDto): HttpResponse<IFeedback>{
-        
-        const data = await this.feedbackService.createFeedback(feedback)
-        return {
-            statusCode: StatusCode.CREATED,
-            message: createdSuccessfully,
-            data,
-        };
-    }
+  @Post('/')
+  @ApiOperation({ summary: SwaggerDescription.post })
+  @ApiBody({ type: FeedbackDto })
+  async createFeedback(@Body() feedback: FeedbackDto): HttpResponse<IFeedback> {
+    const data = await this.feedbackService.createFeedback(feedback);
+    return {
+      statusCode: StatusCode.CREATED,
+      message: createdSuccessfully,
+      data,
+    };
+  }
 }
