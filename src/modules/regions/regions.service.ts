@@ -8,18 +8,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { RegionEntity } from '../regions/entities/regions.entity';
 import { createUploadPath, saveFile } from 'src/common/utils/file.util';
 import { IQrCode } from '../regions/interfaces/qrcode.interface';
-import { PaginateRequestDto } from './dto/requests/paginate.request.dto';
+import { GetRegionDto } from './dto/requests/paginate.request.dto';
 
 @Injectable()
 export class RegionsService {
   constructor(
     @InjectRepository(RegionEntity, 'Assets')
     private readonly _regionRepo: Repository<RegionEntity>,
-
     private readonly configService: ConfigService,
   ) {}
 
-  async getQRCodes(paginate: PaginateRequestDto): Promise<IQrCode[]> {
+  async getQRCodes(paginate: GetRegionDto): Promise<IQrCode[]> {
     const page = paginate.page ?? 1;
     const limit = paginate.limit ?? 10;
     const result: IQrCode[] = [];

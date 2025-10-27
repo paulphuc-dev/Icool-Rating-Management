@@ -14,30 +14,38 @@ import {
   ApiResponse,
   ApiProduces,
   ApiBearerAuth,
+  ApiExtraModels,
 } from '@nestjs/swagger';
-import { SwaggerDescription } from '../consts/swagger-des.const';
-import { GetFeedBackDto } from '../dto/request/get-feedback.dto';
-import { StatisticRequestDto } from '../dto/request/statistic.request.dto';
 import type { HttpResponse } from 'src/common/utils/response.util';
-import { StatusCode } from 'src/common/consts/http-code';
-import { FeedbacksService } from '../feedbacks.service';
-import { IPaginate } from '../interfaces/paginate.interface';
-import { IStatistic } from '../interfaces/statistic.interface';
-import { getDataSuccessfully, forbids } from 'src/common/consts/message';
-import { exportResponse } from '../consts/export-response.const';
-import { headerConfig } from '../enums/header-config';
-import { JwtAuthGuard } from 'src/modules/auth/guards/auth.guard';
-import { permissions } from 'src/common/consts/permissions';
 import type { AuthenticatedRequest } from 'src/modules/auth/interfaces/payload.interface';
+import {
+  FeedbacksService,
+  GetFeedBackDto,
+  StatisticRequestDto,
+  IPaginate,
+  IStatistic,
+  SwaggerDescription,
+  extraModels,
+  exportResponse,
+  headerConfig,
+  ApiQueryDto,
+  JwtAuthGuard,
+  permissions,
+  forbids,
+  StatusCode,
+  getDataSuccessfully,
+} from '../index';
 
 @ApiBearerAuth('Bearer')
 @UseGuards(JwtAuthGuard)
 @ApiTags('Feedbacks')
+@ApiExtraModels(...extraModels)
 @Controller('feedbacks')
 export class FeedbacksCMSController {
   constructor(private readonly feedbackService: FeedbacksService) {}
 
   @Get('/')
+  @ApiQueryDto(GetFeedBackDto)
   @ApiOperation({ summary: SwaggerDescription.getAll })
   async getFeedbacks(
     @Query() getFeedbackReq: GetFeedBackDto,
@@ -59,6 +67,7 @@ export class FeedbacksCMSController {
   }
 
   @Get('/statistic')
+  @ApiQueryDto(StatisticRequestDto)
   @ApiOperation({ summary: SwaggerDescription.getStatistic })
   async statistic(
     @Query() statisticReq: StatisticRequestDto,

@@ -1,6 +1,6 @@
 import { Request } from 'express';
 export interface IPayload {
-  access_token: string;
+  accessToken: string;
   username: string;
   name: string;
   permissions: string[];

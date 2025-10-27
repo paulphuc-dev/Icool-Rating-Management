@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as ExcelJS from 'exceljs';
 import { Repository, DataSource } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
 import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
 import { FeedbacksEntity } from './entities/feedbacks.entity';
 import { FeedbackDetailEntity } from './entities/feedback-detail.entity';
@@ -8,7 +9,6 @@ import { GetFeedBackDto } from './dto/request/get-feedback.dto';
 import { IPaginate } from './interfaces/paginate.interface';
 import { IFeedback } from './interfaces/feedback.interface';
 import { FeedbackDto } from './dto/request/feedback-request.dto';
-import { plainToInstance } from 'class-transformer';
 import { FeedbackResponseDto } from './dto/response/feedback-response.dto';
 import { StatisticRequestDto } from './dto/request/statistic.request.dto';
 import { groupByLabel } from './func/flat-data';

@@ -1,18 +1,21 @@
 import { IsNumber, IsString, IsOptional } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class PaginateRequestDto {
-  @ApiProperty({ required: false })
+export class GetRegionDto {
+  @ApiPropertyOptional({ description: 'Số trang', example: '1' })
   @IsNumber()
   @IsOptional()
   page?: number;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional({ description: 'Số item', example: '1' })
   @IsNumber()
   @IsOptional()
   limit?: number;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional({
+    description: 'Tên cửa hàng',
+    example: 'Icool Xô Viết Nghệ Tĩnh',
+  })
   @IsString()
   @IsOptional()
   storeName?: string;

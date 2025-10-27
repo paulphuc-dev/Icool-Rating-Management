@@ -1,18 +1,18 @@
 import { IsNumber, IsOptional } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetFeedBackDto {
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional({ description: 'Số trang', example: '1' })
   @IsOptional()
   @IsNumber()
   page?: number;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional({ description: 'Số item', example: '10' })
   @IsOptional()
   @IsNumber()
   limit?: number;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional({ description: 'Điểm', example: '5' })
   @IsOptional()
   @IsNumber()
   score?: number;

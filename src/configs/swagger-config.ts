@@ -1,10 +1,16 @@
 import { INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 export class SwaggerConfig {
   static setup(app: INestApplication): void {
+    const configService = app.get(ConfigService);
+    const developmentUrl =
+      configService.get<string>('BASE_URL') ?? 'http://localhost:3001/';
+
     const config = new DocumentBuilder()
-      .setTitle('My API')
-      .setDescription('API documentation')
+      .setTitle('Icool Rating API')
+      .setDescription('Rating API documentation')
       .setVersion('1.0')
       .addBearerAuth(
         {
@@ -17,6 +23,12 @@ export class SwaggerConfig {
         },
         'Bearer',
       )
+      .addServer(developmentUrl, 'http')
+      .addTag('Auth', 'Require login to use CMS features')
+      .addTag('Feedbacks', 'Used to manage feedbacks')
+      .addTag('Regions', 'Used to manage regions')
+      .addTag('Stores', 'Used to manage stores')
+      .addTag('Surveys', 'Used to manage surveys')
       .build();
 
     const document = SwaggerModule.createDocument(app, config);

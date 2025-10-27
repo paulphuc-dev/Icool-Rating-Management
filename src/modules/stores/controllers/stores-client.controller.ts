@@ -1,11 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { SwaggerDescription } from '../consts/swagger-des.const';
-import { IResponse } from '../interfaces/response.interface';
 import type { HttpResponse } from 'src/common/utils/response.util';
-import { StoresService } from '../stores.service';
-import { StatusCode } from 'src/common/consts/http-code';
-import { getDataSuccessfully } from 'src/common/consts/message';
+import {
+  StoresService,
+  IResponse,
+  SwaggerDescription,
+  StatusCode,
+  getDataSuccessfully,
+} from '../index';
 
 @ApiTags('Stores')
 @Controller('stores')
