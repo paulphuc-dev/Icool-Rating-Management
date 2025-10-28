@@ -1,3 +1,3 @@
 export enum Summary {
-    GET_SUMMARY = "Lấy danh sách khảo sát",
+  GET_SUMMARY = 'Lấy danh sách khảo sát',
 }

@@ -3,10 +3,9 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
-import { IErrorType } from '../utils/response';
+import { IErrorType } from '../utils/response.util';
 import { ERROR_MESSAGES } from './error-messages';
 import { StatusCode } from './http-code';
 
@@ -17,18 +16,28 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const path = request.url; 
-    const moduleName = this.detectModule(path); 
+    const path = request.url;
+    const moduleName = this.detectModule(path);
 
     let status = StatusCode.SERVER_INTERNAL_ERROR;
-    let message: string = ERROR_MESSAGES.INVALID_PAYLOAD; 
+    let message: string = ERROR_MESSAGES.INVALID_PAYLOAD;
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
-      const res: any = exception.getResponse();
-      const exceptionMsg =
-        typeof res === 'string' ? res : res?.message || '';
-        message = this.resolveMessage(moduleName, status, exceptionMsg);
+      const res = exception.getResponse();
+      let exceptionMsg = '';
+      if (typeof res === 'string') {
+        exceptionMsg = res;
+      } else if (
+        typeof res === 'object' &&
+        res !== null &&
+        'message' in res &&
+        typeof (res as Record<string, unknown>).message === 'string'
+      ) {
+        exceptionMsg = (res as Record<string, string>).message;
+      }
+
+      message = this.resolveMessage(moduleName, status, exceptionMsg);
     } else {
       message = ERROR_MESSAGES.INVALID_PAYLOAD;
     }
@@ -51,18 +60,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
     status: number,
     exceptionMsg: string,
   ): string {
-
     let message: string = ERROR_MESSAGES.INVALID_PAYLOAD;
+
     switch (status) {
-      case HttpStatus.BAD_REQUEST:
+      case StatusCode.BAD_REQUEST:
         message = ERROR_MESSAGES.INVALID_PAYLOAD;
         break;
 
-      case HttpStatus.UNAUTHORIZED:
+      case StatusCode.UNAUTHORIZED:
         message = ERROR_MESSAGES.INVALID_CREDENTIALS;
         break;
 
-      case HttpStatus.NOT_FOUND:
+      case StatusCode.NOT_FOUND:
         switch (moduleName) {
           case 'STORES':
             message = ERROR_MESSAGES.STORES.STORE_NOTFOUND;
@@ -73,7 +82,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         }
         break;
 
-      case HttpStatus.INTERNAL_SERVER_ERROR:
+      case StatusCode.SERVER_INTERNAL_ERROR:
       default:
         switch (moduleName) {
           case 'FEEDBACKS':

@@ -1,8 +1,8 @@
-import { FeedbackResponseDto } from "../dto/response/feedback-response.dto";
+import { FeedbackResponseDto } from '../dto/response/feedback-response.dto';
 
-export interface IPaginate{
-    total: number;
-    page: number;
-    limit: number;
-    data:  FeedbackResponseDto[];
-} 
+export interface IPaginate {
+  total: number;
+  page: number;
+  limit: number;
+  data: FeedbackResponseDto[];
+}

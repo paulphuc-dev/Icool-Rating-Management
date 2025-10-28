@@ -1,20 +1,22 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { FeedbacksController } from './feedbacks.controller';
-import { FeedbacksService } from './feedbacks.service';
-import { FeedbacksEntity } from './entities/feedbacks.entity';
-import { FeedbackDetailEntity } from './entities/feedback-detail.entity';
-import { RatingDetailEntity } from '../surveys/entities/rating-detail.entity';
+import { RouterModule } from '@nestjs/core';
+import { FeedbacksClientModule } from './modules/feedback-client.module';
+import { FeedbacksCMSModule } from './modules/feedbacks-cms.module';
 
 @Module({
   imports: [
-      TypeOrmModule.forFeature([
-        FeedbacksEntity, 
-        FeedbackDetailEntity
-      ]), 
+    RouterModule.register([
+      {
+        path: 'cms',
+        module: FeedbacksCMSModule,
+      },
+      {
+        path: 'client',
+        module: FeedbacksClientModule,
+      },
+    ]),
+    FeedbacksCMSModule,
+    FeedbacksClientModule,
   ],
-  controllers: [FeedbacksController],
-  providers: [FeedbacksService],
-  exports: [FeedbacksService]
 })
 export class FeedbacksModule {}

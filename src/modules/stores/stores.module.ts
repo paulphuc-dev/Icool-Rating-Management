@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { StoresController } from './stores.controller';
-import { StoresService } from './stores.service';
-import { StoresEntity } from './entities/stores.entity';
+import { RouterModule } from '@nestjs/core';
+import { StoresClientModule } from './modules/stores-client.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      StoresEntity
-    ])
+    RouterModule.register([
+      {
+        path: 'client',
+        module: StoresClientModule,
+      },
+    ]),
+    StoresClientModule,
   ],
-  controllers: [StoresController],
-  providers: [StoresService]
 })
 export class StoresModule {}

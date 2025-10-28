@@ -15,7 +15,6 @@ export interface IData {
   values: IRatingLevel[];
 }
 
-export interface IStatistic{
+export interface IStatistic {
   statisticData: IData[];
 }
-    

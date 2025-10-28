@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
-import { typeormConfig } from 'src/configs/database.config';
+import { typeormKaraokeConfig } from 'src/configs/karaoke-database.config';
+import { typeormAssetsConfig } from 'src/configs/assets-database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
@@ -11,7 +12,12 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
-      ...typeormConfig, 
+      ...typeormKaraokeConfig,
+      name: 'Karaoke',
+    }),
+    TypeOrmModule.forRoot({
+      ...typeormAssetsConfig,
+      name: 'Assets',
     }),
   ],
 })

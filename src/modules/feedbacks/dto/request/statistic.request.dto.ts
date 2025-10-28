@@ -1,15 +1,14 @@
-import { IsString, IsNumber, IsOptional } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class StatisticRequestDto{
+export class StatisticRequestDto {
+  @ApiPropertyOptional({ description: 'Mã khu vực', example: '1' })
+  @IsOptional()
+  @IsNumber()
+  regionId?: number;
 
-    @ApiProperty({required: false})
-    @IsOptional()
-    @IsNumber()
-    regionId?: number;
-   
-    @ApiProperty({required: false})
-    @IsOptional()
-    @IsString()
-    storeCode?: string;
+  @ApiPropertyOptional({ description: 'Mã cửa hàng', example: '1' })
+  @IsOptional()
+  @IsString()
+  storeCode?: string;
 }
