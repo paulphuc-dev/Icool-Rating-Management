@@ -1,0 +1,10 @@
+services:
+  rating-api:
+    image: rating-api
+    build:
+      context: .               
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./upload:/usr/src/app/upload
