@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export function createUploadPath(): string {
-  const uploadDir = path.join(process.cwd(), 'upload', 'qrcodes');
+export function createUploadPath(moduleName: string): string {
+  const uploadDir = path.join(process.cwd(), 'upload', 'qrcodes', moduleName);
   fs.mkdirSync(uploadDir, { recursive: true });
   return uploadDir;
 }

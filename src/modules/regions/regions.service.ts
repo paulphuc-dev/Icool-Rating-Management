@@ -1,12 +1,11 @@
-import * as path from 'path';
 import * as fs from 'fs';
-import * as QRCode from 'qrcode';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RegionEntity } from '../regions/entities/regions.entity';
-import { createUploadPath, saveFile } from 'src/common/utils/file.util';
+import { createUploadPath } from 'src/common/utils/file.util';
+import { generateQRCode } from 'src/common/utils/qrcode-generate.util';
 import { IQrCode } from '../regions/interfaces/qrcode.interface';
 import { GetRegionDto } from './dto/requests/paginate.request.dto';
 
@@ -23,8 +22,8 @@ export class RegionsService {
     const limit = paginate.limit ?? 10;
     const result: IQrCode[] = [];
 
-    const baseUrl = this.configService.get<string>('WEB_URL');
-    const srcUrl = this.configService.get<string>('BASE_URL');
+    const baseUrl = this.configService.get<string>('WEB_URL') ?? '';
+    const srcUrl = this.configService.get<string>('BASE_URL') ?? '';
     const query = this._regionRepo
       .createQueryBuilder('regions')
       .leftJoinAndSelect('regions.store', 'store')
@@ -48,7 +47,7 @@ export class RegionsService {
 
     query.skip((page - 1) * limit).take(limit);
     const regions = await query.getMany();
-    const uploadPath = createUploadPath();
+    const uploadPath = createUploadPath('regions');
 
     if (fs.existsSync(uploadPath)) {
       fs.rmSync(uploadPath, { recursive: true, force: true });
@@ -56,17 +55,12 @@ export class RegionsService {
     fs.mkdirSync(uploadPath, { recursive: true });
 
     for (const region of regions) {
-      const qrData = `${baseUrl}?id=${region.id}`;
-      const buffer = await QRCode.toBuffer(qrData, {
-        color: { dark: '#016bffff', light: '#fff' },
-        width: 300,
-      });
-
-      const fileName = `region-${region.name}.png`;
-      const filePath = saveFile(uploadPath, fileName, buffer);
-      const relativePath = path
-        .relative(process.cwd(), filePath)
-        .replace(/\\/g, '/');
+      const relativePath = await generateQRCode(
+        baseUrl,
+        uploadPath,
+        region.id.toString(),
+        region.name,
+      );
       result.push({
         id: region.id,
         storeId: region.storeId,

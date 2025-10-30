@@ -16,6 +16,7 @@ import { IStatistic, IData } from './interfaces/statistic.interface';
 import { feedbackColumn } from './consts/column';
 import { IExportFeedback } from './interfaces/export-feedback.interface';
 import { IFlatRow } from './interfaces/statistic.interface';
+import { IMessage } from './interfaces/message.interface';
 
 @Injectable()
 export class FeedbacksService {
@@ -48,6 +49,18 @@ export class FeedbacksService {
     if (getFeedbackReq.score) {
       query.andWhere('scaleOption.scoreValue = :score', {
         score: getFeedbackReq.score,
+      });
+    }
+
+    if (getFeedbackReq.store) {
+      query.andWhere('store.name LIKE :name', {
+        name: `%${getFeedbackReq.store}%`,
+      });
+    }
+
+    if (getFeedbackReq.status) {
+      query.andWhere('feedback.processStatus =:status', {
+        status: getFeedbackReq.status,
       });
     }
 
@@ -207,6 +220,7 @@ export class FeedbacksService {
         phoneNumber: feedbackDto.phoneNumber,
         ratingDate: new Date(feedbackDto.ratingDate),
         content: feedbackDto.content,
+        processStatus: 'pending',
       });
 
       const savedFeedback = await queryRunner.manager.save(
@@ -242,5 +256,18 @@ export class FeedbacksService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async readFeedback(feedbackId: string): Promise<IMessage> {
+    const feedback = await this._feedbackRepo.findOne({
+      where: { id: feedbackId, deleteFlag: false },
+    });
+    if (!feedback) {
+      return { message: 'Feedback not found' };
+    }
+
+    feedback.processStatus = 'resolved';
+    await this._feedbackRepo.save(feedback);
+    return { message: 'Feedback is marked as read' };
   }
 }

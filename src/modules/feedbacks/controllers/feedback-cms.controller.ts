@@ -4,6 +4,8 @@ import {
   Query,
   Res,
   Req,
+  Patch,
+  Param,
   UseGuards,
   ForbiddenException,
 } from '@nestjs/common';
@@ -34,6 +36,8 @@ import {
   forbids,
   StatusCode,
   getDataSuccessfully,
+  IMessage,
+  readSuccessfully,
 } from '../index';
 
 @ApiBearerAuth('Bearer')
@@ -98,5 +102,16 @@ export class FeedbacksCMSController {
     res.setHeader(headerConfig.TYPE, headerConfig.VALUE);
     res.setHeader(headerConfig.TYPE1, headerConfig.FILE);
     res.send(buffer);
+  }
+
+  @Patch('/:id')
+  @ApiOperation({ summary: SwaggerDescription.getExport })
+  async read(@Param('id') feedbackId: string): HttpResponse<IMessage> {
+    const data = await this.feedbackService.readFeedback(feedbackId);
+    return {
+      statusCode: StatusCode.OK,
+      message: readSuccessfully,
+      data,
+    };
   }
 }

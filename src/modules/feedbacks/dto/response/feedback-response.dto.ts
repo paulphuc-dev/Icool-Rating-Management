@@ -29,6 +29,9 @@ export class FeedbackResponseDto {
   createdBy?: string;
 
   @Expose()
+  processStatus: string;
+
+  @Expose()
   @Type(() => StoresResponseDto)
   store: StoresResponseDto;
 

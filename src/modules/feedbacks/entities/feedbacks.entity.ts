@@ -37,6 +37,9 @@ export class FeedbacksEntity extends BaseEntity {
   @Column('nvarchar', { name: 'content', nullable: true })
   content: string;
 
+  @Column('varchar', { name: 'process_status', default: 'pending' })
+  processStatus: string;
+
   @ManyToOne(() => StoresEntity, (store) => store.feedbacks)
   @JoinColumn({ name: 'store_code', referencedColumnName: 'code' })
   store: StoresEntity;

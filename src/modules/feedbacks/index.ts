@@ -13,3 +13,4 @@ export * from 'src/common/consts/http-code';
 export * from 'src/common/consts/message';
 export * from 'src/common/consts/permissions';
 export * from '../auth/guards/auth.guard';
+export * from './interfaces/message.interface';

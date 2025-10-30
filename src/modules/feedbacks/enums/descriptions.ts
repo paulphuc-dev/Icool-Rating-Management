@@ -3,4 +3,5 @@ export enum Summary {
   POST_SUMMARY = 'Lưu đánh giá',
   GET_STATISTIC = 'Thống kê đánh giá theo khu vực cửa hàng',
   GET_EXPORT = 'Nhận dữ liệu xuất từ excel',
+  CONFIRM = 'Xác nhận đã đọc',
 }

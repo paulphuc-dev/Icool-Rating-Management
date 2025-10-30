@@ -10,6 +10,8 @@ export const SwaggerDescription = {
   getStatistic: Summary.GET_STATISTIC,
 
   getExport: Summary.GET_EXPORT,
+
+  confirm: Summary.CONFIRM,
 };
 
 export const extraModels = [GetFeedBackDto, StatisticRequestDto] as const;
